@@ -1,14 +1,40 @@
-<!-- Forum.svelte -->
 <script>
-  // Svelte component logic for the forum
-</script>
+  import { onMount } from 'svelte';
+  import ForumPostForm from './ForumPostForm.svelte';
+  import ForumPostList from './ForumPostList.svelte';
 
-<style>
-  /* custom styles for the forum */
-</style>
+  let forumPosts = [];
+
+  onMount(async () => {
+    try {
+      const response = await fetch('http://localhost:3000/forumPosts');
+      if (response.ok) {
+        forumPosts = await response.json();
+      } else {
+        console.error("Failed to fetch posts:", await response.text());
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  });
+
+  function handleNewPost(event) {
+    const newPost = { 
+      id: forumPosts.length + 1, 
+      title: event.detail.title, 
+      content: event.detail.content, 
+      comments: []
+    };
+    forumPosts = [newPost, ...forumPosts];
+  }
+
+  function handleDeletePost(event) {
+    forumPosts = forumPosts.filter(post => post.id !== event.detail);
+  }
+</script>
 
 <div>
   <h2>Forum</h2>
-  <!-- Forum post creation and display -->
-  <!-- Implement the forum post creation form and display using layout -->
+  <ForumPostForm on:newPost={handleNewPost} />
+  <ForumPostList posts={forumPosts} on:deletePost={handleDeletePost} />
 </div>

@@ -1,70 +1,67 @@
 const socket = io();
 
+const getElement = (id) => document.getElementById(id);
+
+const postRequest = (url, body) => fetch(url, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(body),
+}).then(response => {
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+});
+
 // Handle receiving messages
 socket.on('chat message', (msg) => {
-  const messagesDiv = document.getElementById('messages');
+  const messagesDiv = getElement('messages');
   const newMessage = document.createElement('p');
   newMessage.textContent = msg.message;
   messagesDiv.appendChild(newMessage);
 
-  // Show browser notification for new messages
   if (document.visibilityState !== 'visible') {
     showNotification(msg.message);
   }
 });
 
-// Handle sending messages
-const input = document.getElementById('input');
-const sendButton = document.getElementById('send');
-sendButton.addEventListener('click', () => {
-  const message = input.value;
+getElement('send').addEventListener('click', () => {
+  const message = getElement('input').value;
   socket.emit('chat message', message);
-  input.value = '';
+  getElement('input').value = '';
 });
 
-// login form submission
-const loginForm = document.getElementById('login-form');
-loginForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-
-  fetch('/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ username, password }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const token = data.token;
-      // Store the token securely
-    })
-    .catch((error) => {
-      console.error('Login error:', error);
+const handleFormSubmission = (formId, url, successCallback) => {
+  const form = getElement(formId);
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = Object.fromEntries(new FormData(form).entries());
+    postRequest(url, formData).then(successCallback).catch(error => {
+      console.error(`Error with ${formId}:`, error);
     });
+  });
+};
+
+handleFormSubmission('register-form', '/register', (data) => {
+  localStorage.setItem('token', data.token);
+  alert("Registration successful!"); // Feedback about successful registration.
+  window.location.href = "/dashboard"; // Redirect to dashboard after registration.
 });
 
-// Handle subscription form submission
-const subscriptionForm = document.getElementById('subscription-form');
-const subscribeButton = document.getElementById('subscribe');
-subscribeButton.addEventListener('click', () => {
-  subscribeToNotifications()
-    .then((subscription) => {
-      const socketId = socket.id;
-      fetch('/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ socketId, subscription }),
-      });
-    })
-    .catch((error) => {
-      console.error('Subscription error:', error);
-    });
+handleFormSubmission('login-form', '/login', (data) => {
+  localStorage.setItem('token', data.token);
+  window.location.href = "/dashboard"; // Redirect to dashboard after login.
 });
+
+getElement('subscribe').addEventListener('click', () => {
+  subscribeToNotifications().then((subscription) => {
+    const socketId = socket.id;
+    postRequest('/subscribe', { socketId, subscription });
+  }).catch((error) => {
+    console.error('Subscription error:', error);
+  });
+});
+
 
 // Subscribe to browser push notifications
 function subscribeToNotifications() {

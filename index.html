@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Chat Service</title>
-  </head>
-  <body>
-    <div id="messages"></div>
-    <input id="input" type="text" placeholder="Type a message..." />
-    <button id="send">Send</button>
+<head>
+  <title>Chat Service</title>
+</head>
+<body>
+  <div id="messages"></div>
+  <input id="input" type="text" placeholder="Type a message..." />
+  <button id="send">Send</button>
 
-    <form id="login-form">
-      <input id="username" type="text" placeholder="Username" />
-      <input id="password" type="password" placeholder="Password" />
-      <button type="submit">Log In</button>
-    </form>
+  <form id="login-form">
+    <input id="username" type="text" placeholder="Username" />
+    <input id="password" type="password" placeholder="Password" />
+    <button type="submit">Log In</button>
+  </form>
 
-    <form id="subscription-form">
-      <button type="button" id="subscribe">Subscribe to Notifications</button>
-    </form>
+  <form id="register-form">
+    <input id="email" type="email" placeholder="Email" />
+    <input id="new-username" type="text" placeholder="New Username" />
+    <input id="new-password" type="password" placeholder="New Password" />
+    <button type="submit">Register</button>
+  </form>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web-push"></script>
-    <script src="/scripts/main.js"></script>
-  </body>
+  <form id="subscription-form">
+    <button type="button" id="subscribe">Subscribe to Notifications</button>
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web-push"></script>
+  <script src="/scripts/main.js"></script>
+</body>
 </html>
