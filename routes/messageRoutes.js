@@ -1,10 +1,10 @@
-
 const express = require('express');
+const server = require('../server.js');
+const Message = require('../models/Message.js');
+const authenticateJWT = require('../middleware/auth.js');
+
+
 const router = express.Router();
-const {io} = require('../server');
-const Message = require('../models/Message');
-const User = require('../models/User');
-const { authenticateJWT } = require('../middleware/auth');
 
 async function createAndSaveMessage(content, authorId) {
     try {
@@ -45,6 +45,5 @@ router.post('/messages', authenticateJWT, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-
 
 module.exports = router;

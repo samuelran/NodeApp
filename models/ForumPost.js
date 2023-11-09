@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const ForumPostSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },

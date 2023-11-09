@@ -1,8 +1,11 @@
 const express = require('express');
-const router = express.Router();
-const ForumPost = require('../models/ForumPost');
+const ForumPost = require('../models/ForumPost.js');
+const authenticateJWT = require('../middleware/auth.js');
 
-router.get('/forum-posts', async (req, res) => {
+
+const router = express.Router();
+
+router.get('/forum-posts', async (_req, res) => {
     try {
         const posts = await ForumPost.find().populate('author', 'email');
         res.json(posts);
@@ -50,8 +53,5 @@ router.delete('/forum-posts/:id', authenticateJWT, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
-
-
-
 
 module.exports = router;

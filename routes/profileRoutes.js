@@ -1,9 +1,10 @@
-
 const express = require('express');
 const router = express.Router();
-const { authenticateJWT } = require('../middleware/auth');
+const authenticateJWT = require('../middleware/auth.js');
+const { createAndSaveUserProfile, updateProfile } = require('../models/userProfile.js');
 
-app.post('/userprofiles', authenticateJWT, async (req, res) => {
+
+router.post('/userprofiles', authenticateJWT, async (req, res) => {
     try {
       const { name, email, profilePicture, about } = req.body;
       const userId = req.user._id;
@@ -23,7 +24,7 @@ app.post('/userprofiles', authenticateJWT, async (req, res) => {
     }
   });
   
-  app.put('/userProfile', authenticateJWT, async (req, res) => {
+  router.put('/userProfile', authenticateJWT, async (req, res) => {
     try {
       const { name, email, profilePicture, about } = req.body;
       const userId = req.user.id;
@@ -38,7 +39,7 @@ app.post('/userprofiles', authenticateJWT, async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });   
-  app.get('/userprofiles', authenticateJWT, async (req, res) =>{
+  router.get('/userprofiles', authenticateJWT, async (req, res) =>{
     try{
         const { name, email, profilePicture, about } = req.user;
         res.status(200).json({ name, email, profilePicture, about });  

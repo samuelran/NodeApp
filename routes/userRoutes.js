@@ -1,17 +1,19 @@
 const express = require('express');
-const router = express.Router();
 const passport = require('passport');
-const { SECRET_KEY } = process.env;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/User.js');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const { SECRET_KEY } = require('../config.js');
+const router = express.Router();
+
 
 router.use(express.json());
 
-
-
-router.post('/login', (req, res, next) => {
-    passport.authenticate('local', { session: false }, (err, user, info) => {
+router.post('localhost:8080/login', (req, res, next) => {
+    passport.authenticate('local', { session: false }, (err, user) => {
         if (err || !user) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
@@ -24,7 +26,7 @@ router.post('/login', (req, res, next) => {
 
 router.post('/register', async (req, res) => {
     try {
-        const { email, password, name, profilePicture, about, } = req.body;
+        const { email, password } = req.body;
 
         const existingUser = await User.findOne({ email: email.toLowerCase() });
 
@@ -49,4 +51,5 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 module.exports = router;
