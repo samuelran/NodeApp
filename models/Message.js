@@ -6,7 +6,8 @@ const messageSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  date: { type: Date, default: Date.now }
 });
 const Message = mongoose.model('Message', messageSchema);
 
-module.exports = Message; // Export the Message model
+module.exports = Message;

@@ -1,11 +1,13 @@
 <script>
+  import TailwindCss from './styles/TailwindCSS.svelte';
   import { Router, Route } from 'svelte-routing';
-  import Navbar from './Navbar.svelte';
-  import Dashboard from './Dashboard.svelte';
-  import ChatForm from './chatform.svelte';
-  import ForumFrontend from './forum.svelte';
-  import LoginForm from './LoginForm.svelte';
-  import { isLoggedIn, email } from './store.js';
+  import Navbar from './components/Navbar.svelte';
+  import Dashboard from './pages/Dashboard.svelte';
+  import ChatForm from './pages/Chat.svelte';
+  import ForumFrontend from './pages/Forum.svelte';
+  import LoginForm from './pages/Login.svelte';
+  import UserProfile from './pages/UserProfile.svelte';
+  import { isLoggedIn, email } from './stores/store.js';
 
   function logout() {
       $isLoggedIn = false;
@@ -16,7 +18,7 @@
 
 <Router>
   {#if $isLoggedIn}
-    <Navbar />
+    <Navbar on:logout={logout} />
   {/if}
 
   <Route path="/">
@@ -32,10 +34,20 @@
 
     <Route path="/dashboard">
         {#if $isLoggedIn}
-        <Navbar on:logout={logout} />
             <Dashboard />
         {:else}
             <LoginForm on:loggedIn={() => $isLoggedIn = true} />
+        {/if}
+    </Route>
+
+    <Route path="/profile">
+        {#if $isLoggedIn}
+            <UserProfile validatedUsername={$email} />
+        {:else}
+            <LoginForm on:loggedIn={() => {
+                $isLoggedIn = true;
+                // $email = 'user@email.com'; 
+            }} />
         {/if}
     </Route>
 
@@ -45,8 +57,6 @@
         {:else}
             <LoginForm on:loggedIn={() => {
                 $isLoggedIn = true;
-                // Also, ideally, after a successful login, you should set the $email value.
-                // $email = 'user@email.com'; 
             }} />
         {/if}
     </Route>

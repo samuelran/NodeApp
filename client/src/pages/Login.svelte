@@ -1,8 +1,9 @@
 <script>
     import { navigate } from 'svelte-routing';
-    import Register from './RegistrationForm.svelte';
+    import Register from '../components/RegistrationForm.svelte';
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
+
 
     let showRegister = false;
     let email = '';

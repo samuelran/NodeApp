@@ -12,17 +12,22 @@
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-terser": "^0.4.0",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.28",
     "rollup": "^3.15.0",
     "rollup-plugin-css-only": "^4.3.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.1.2",
-    "svelte-spa-router": "^3.3.0"
+    "svelte-spa-router": "^3.3.0",
+    "tailwindcss": "^3.3.3"
   },
   "dependencies": {
     "sirv-cli": "^2.0.0",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
     "svelte": "^4.1.2",
-    "svelte-routing": "^2.0.0"
+    "svelte-kit": "^1.2.0",
+    "svelte-routing": "^2.0.0",
+    "svelte-time": "^0.8.0"
   }
 }

@@ -12,16 +12,18 @@
 <nav>
     <ul>
         <li><Link to="/dashboard" activeClass="active" class="nav-link">Dashboard</Link></li>
-        <li><Link to="/chat" activeClass="active" class="nav-link">Chat Service</Link></li>
-        <li><Link to="/forum" activeClass="active" class="nav-link">Forum Frontend</Link></li>
-        <li><button on:click={handleLogout} class="nav-link logout-button">Logout</button></li>
+        <li><Link to="/chat" activeClass="active" class="nav-link">Chat</Link></li>
+        <li><Link to="/forum" activeClass="active" class="nav-link">Forum</Link></li>
+        <li><Link to="/profile" activeClass="active" class="nav-link">Profile</Link></li>     
     </ul>
+    <button on:click={handleLogout} class="nav-link logout-button">Logout</button>
 </nav>
 
 <style>
     nav {
-        background-color: #333;
+        background-color: #75756A;
         padding: 10px;
+        position: relative;
     }
 
     ul {
@@ -35,8 +37,7 @@
     }
 
     .nav-link {
-        color: #fff;
-        text-decoration: none;
+        color: #3E8DAD;
         transition: color 0.3s;
     }
 
@@ -54,14 +55,17 @@
 
     .logout-button {
         background-color: transparent;
+        position: absolute;
+        top: 37%;
+        right: 2%;
         border: none;
         cursor: pointer;
-        color: #fff;
+        color: rgb(18, 19, 18);
         padding: 0;
     }
 
     .logout-button:hover {
-        color: #ccc;
+        color: darkred;
     }
 
     .logout-button:active {

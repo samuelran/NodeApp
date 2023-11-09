@@ -1,4 +1,4 @@
-const socket = io();
+/*const socket = io();
 
 const getElement = (id) => document.getElementById(id);
 
@@ -11,18 +11,6 @@ const postRequest = (url, body) => fetch(url, {
     throw new Error('Network response was not ok');
   }
   return response.json();
-});
-
-// Handle receiving messages
-socket.on('chat message', (msg) => {
-  const messagesDiv = getElement('messages');
-  const newMessage = document.createElement('p');
-  newMessage.textContent = msg.message;
-  messagesDiv.appendChild(newMessage);
-
-  if (document.visibilityState !== 'visible') {
-    showNotification(msg.message);
-  }
 });
 
 getElement('send').addEventListener('click', () => {
@@ -42,15 +30,15 @@ const handleFormSubmission = (formId, url, successCallback) => {
   });
 };
 
-handleFormSubmission('register-form', '/register', (data) => {
+/*handleFormSubmission('register-form', '/register', (data) => {
   localStorage.setItem('token', data.token);
-  alert("Registration successful!"); // Feedback about successful registration.
-  window.location.href = "/dashboard"; // Redirect to dashboard after registration.
+  alert("Registration successful!"); 
+  window.location.href = "/dashboard";
 });
 
 handleFormSubmission('login-form', '/login', (data) => {
   localStorage.setItem('token', data.token);
-  window.location.href = "/dashboard"; // Redirect to dashboard after login.
+  window.location.href = "/dashboard"; 
 });
 
 getElement('subscribe').addEventListener('click', () => {
@@ -63,7 +51,7 @@ getElement('subscribe').addEventListener('click', () => {
 });
 
 
-// Subscribe to browser push notifications
+
 function subscribeToNotifications() {
   return new Promise((resolve, reject) => {
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
@@ -93,7 +81,6 @@ function subscribeToNotifications() {
   });
 }
 
-// Show browser notification
 function showNotification(message) {
   if (Notification.permission === 'granted') {
     navigator.serviceWorker.getRegistration()
@@ -103,4 +90,4 @@ function showNotification(message) {
         });
       });
   }
-}
+} */
