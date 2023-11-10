@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.post('localhost:8080/login', (req, res, next) => {
+router.post('/', (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user) => {
         if (err || !user) {
             return res.status(401).json({ error: 'Invalid email or password' });
